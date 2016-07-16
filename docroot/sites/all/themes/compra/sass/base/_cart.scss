@@ -1,0 +1,17 @@
+div.messages.commerce-add-to-cart-confirmation{
+  width: 550px;
+  .message-inner .button-wrapper{
+    width: 40%;
+  }
+  .commerce-product-product{
+    font-size: 0.7em;
+  }
+  
+  .contextual-links-region {
+    position: static;
+  }
+}
+
+#block-commerce-cart-cart{
+  font-size: 0.8em;
+}

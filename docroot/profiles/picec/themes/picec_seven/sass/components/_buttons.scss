@@ -1,0 +1,6 @@
+.maintenance-page.in-maintenance{
+  .form-submit{
+    background: none;
+    @include sassy-button('flat', 0px, 14px, $blue, $blue, white, inset);
+  }
+}

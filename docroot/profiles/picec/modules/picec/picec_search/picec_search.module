@@ -1,0 +1,24 @@
+<?php
+/**
+ * @file
+ * Code for the PICEC Search feature.
+ */
+
+include_once 'picec_search.features.inc';
+
+/**
+ * Implements hook_block_info_alter().
+ */
+function picec_search_block_info_alter(&$blocks, $theme, $code_blocks) {
+  if (isset($blocks['facetapi']['TFVaQKSORCPdrULxfXDnLQZ40xH0Nper']) && empty($blocks['facetapi']['TFVaQKSORCPdrULxfXDnLQZ40xH0Nper']['title'])) {
+    $blocks['facetapi']['TFVaQKSORCPdrULxfXDnLQZ40xH0Nper']['title'] = t('Price');
+  }
+
+  if (isset($blocks['facetapi']['pLVzab0nMbhSSwArINqSoiflSivVes2Q']) && empty($blocks['facetapi']['pLVzab0nMbhSSwArINqSoiflSivVes2Q']['title'])) {
+    $blocks['facetapi']['pLVzab0nMbhSSwArINqSoiflSivVes2Q']['title'] = t('Categories');
+  }
+
+  if (isset($blocks['current_search']['picec_search']) && empty($blocks['current_search']['picec_search']['title'])) {
+    $blocks['current_search']['picec_search']['title'] = ' ';
+  }
+}

@@ -1,0 +1,613 @@
+<?php
+
+/**
+ * @file
+ * @TODO:
+ */
+
+/**
+ * Implements hook_install_tasks().
+ */
+function picec_install_tasks() {
+  $tasks = array();
+
+  // Added a new task.
+  $tasks['picec_configure_store_form'] = array(
+    'display_name' => st('Configure store'),
+    'type' => 'form',
+  );
+
+  $install_demo = variable_get('picec_profile_demo_install', FALSE);
+  $tasks['picec_configure_install_demo'] = array(
+    'display_name' => st('Install additional modules'),
+    'type' => 'batch',
+    'display' => $install_demo,
+    'run' => $install_demo ? INSTALL_TASK_RUN_IF_NOT_COMPLETED : INSTALL_TASK_SKIP,
+  );
+
+  $tasks['picec_configure_import_content'] = array(
+    'display_name' => st('Import Products'),
+    'type' => 'batch',
+    'display' => $install_demo,
+    'run' => $install_demo ? INSTALL_TASK_RUN_IF_NOT_COMPLETED : INSTALL_TASK_SKIP,
+  );
+
+  return $tasks;
+}
+
+
+/**
+ * Implements hook_install_tasks_alter().
+ */
+function picec_install_tasks_alter(&$tasks, $install_state) {
+  $tasks['install_finished']['function'] = 'picec_install_finished';
+  $tasks['install_select_profile']['display'] = FALSE;
+  $tasks['install_profile_modules']['display_name'] = st('Install PICEC');
+  $new_task['picec_install_welcome'] = array(
+    'display' => TRUE,
+    'display_name' => st('Welcome'),
+    'type' => 'form',
+    'run' => isset($install_state['parameters']['welcome']) ? INSTALL_TASK_SKIP : INSTALL_TASK_RUN_IF_REACHED,
+  );
+  $old_tasks = $tasks;
+  $tasks = array_slice($old_tasks, 0, 2) + $new_task + array_slice($old_tasks, 2);
+
+  $theme = 'picec_seven';
+  if ($GLOBALS['theme'] != $theme) {
+    unset($GLOBALS['theme']);
+
+    drupal_static_reset();
+    $GLOBALS['conf']['maintenance_theme'] = $theme;
+    _drupal_maintenance_theme();
+  }
+
+}
+
+
+/**
+ * Task Callback: Welcome.
+ */
+function picec_install_welcome($form, &$form_state, &$install_state) {
+
+  drupal_set_title(st('Welcome to the installation of the Chilean electronic commerce.'));
+  $form['terms'] = array(
+    '#type' => 'fieldset',
+    '#title' => st('PICEC Installation'),
+    '#description' => st('This profile is designed for ecommerce Chilean locality. Please check the following before installing:'),
+  );
+
+  $items[] = st('This profile is developed by the <a href="!url" target="_blank">community of Chile</a>.', array('!url' => 'http://drupalchile.org'));
+  $items[] = st('For any problem or bug you find please report it on the <a href="!url" target="_blank">project page</a> at drupal.org', array('!url' => 'https://www.drupal.org/project/picec'));
+  $form['terms']['items'] = array(
+    '#theme' => 'item_list',
+    '#items' => $items,
+  );
+
+  $form['actions'] = array(
+    '#type' => 'actions',
+  );
+
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => st('Proceed with the installation'),
+    '#weight' => 10,
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler.
+ */
+function picec_install_welcome_submit($form, &$form_state) {
+  global $install_state;
+
+  $install_state['parameters']['welcome'] = 'done';
+  $install_state['parameters']['locale'] = 'es';
+}
+
+
+/**
+ * Task Callback: Configure Store.
+ */
+function picec_configure_store_form($form, &$form_state, &$install_state) {
+  drupal_set_title(st('Configure store'));
+  ctools_include('dependent');
+
+  // Setup an account of Khipu.
+  module_load_include('inc', 'khipu', 'khipu.admin');
+  $form['khipu_setting'] = array(
+    '#type' => 'fieldset',
+    '#title' => st('Setting Khipu'),
+    '#tree' => TRUE,
+    '#description' => st('Define a khipu account for use in the payment system. You need to have an account in <a href="!url" target="_blank">khipu</a>.', array('!url' => 'http://khipu.com')),
+  );
+  $form['khipu_setting']['check'] = array(
+    '#type' => 'checkbox',
+    '#title' => st('I have an account and i want to integrate it with my commerce.'),
+  );
+
+  $form['khipu_setting'] += khipu_admin_account_form(array(), $form_state);
+  unset($form['khipu_setting']['submit']);
+  unset($form['khipu_setting']['username']);
+  // Remove required options
+  $form['khipu_setting']['receiver_name']['#required'] = FALSE;
+  $form['khipu_setting']['receiver_id']['#required'] = FALSE;
+  $form['khipu_setting']['receiver_key']['#required'] = FALSE;
+
+  $form['khipu_setting']['receiver_name']['#default_value'] = st('!site_name Account', array('!site_name' => variable_get('site_name')));
+  $form['khipu_setting']['uid'] = array(
+    '#type' => 'hidden',
+    '#value' => 1,
+  );
+  // Attach the dependent feature.
+  $dependent = array(
+    '#process' => array('ctools_dependent_process'),
+    '#dependency' => array('edit-khipu-setting-check' => array(1)),
+  );
+  $form['khipu_setting']['receiver_name'] += $dependent;
+  $form['khipu_setting']['receiver_id'] += $dependent;
+  $form['khipu_setting']['receiver_key'] += $dependent;
+
+  // Define if want to install the demo.
+  $form['picec_demo'] = array(
+    '#type' => 'fieldset',
+    '#title' => st('Demo Content'),
+    '#tree' => TRUE,
+  );
+  $form['picec_demo']['install'] = array(
+    '#type' => 'checkbox',
+    '#title' => st('I want to install the products examples.'),
+  );
+
+  $form['actions'] = array('#type' => 'actions');
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => st('Next'),
+    '#weight' => 15,
+  );
+
+  return $form;
+}
+
+/**
+ * Validate handler.
+ */
+function picec_configure_store_form_validate($form, &$form_state) {
+
+  $khipu_values = $form_state['values']['khipu_setting'];
+  if ($khipu_values['check']) {
+    foreach (array('receiver_name', 'receiver_id', 'receiver_key') as $name) {
+      if (trim($khipu_values[$name]) == '') {
+        form_set_error('khipu_setting][' . $name, st('!name field is required.', array('!name' => $form['khipu_setting'][$name]['#title'])));
+      }
+    }
+
+    // Validate with Khipi API if the Receiver ID and Receiver Key exist.
+    if (!($environment = khipu_check_account($khipu_values['receiver_id'], $khipu_values['receiver_key']))) {
+      form_set_error('khipu_setting][receiver_id', t('Khipu not recognize the entered credentials.'));
+      form_set_error('khipu_setting][receiver_key');
+    }
+    else {
+      $form_state['values']['khipu_setting']['environment'] = $environment;
+    }
+  }
+}
+
+
+/**
+ * Submit handler.
+ */
+function picec_configure_store_form_submit($form, &$form_state) {
+  $values = $form_state['values'];
+
+  // Khipu Setting.
+  if ($values['khipu_setting']['check']) {
+    picec_configure_store_form_submit_khipu($values['khipu_setting']);
+  }
+
+  if ($values['picec_demo']['install']) {
+    variable_set('picec_profile_demo_install', TRUE);
+  }
+}
+
+/**
+ * Create and configure the payment Khipu.
+ */
+function picec_configure_store_form_submit_khipu($values) {
+  $khipu_account = new stdClass();
+  $khipu_account->receiver_name = $values['receiver_name'];
+  $khipu_account->uid = $values['uid'];
+  $khipu_account->receiver_id = $values['receiver_id'];
+  $khipu_account->receiver_key = $values['receiver_key'];
+  $khipu_account->environment = $values['environment'];
+  $khipu_account->created = time();
+
+  khipu_save_account($khipu_account);
+
+  // Install the module commerce_khipu.
+  module_enable(array('commerce_khipu'));
+
+  $rule = rules_config_load('commerce_payment_khipu');
+  // Active the rule.
+  $rule->active = 1;
+
+  foreach ($rule->actions() as $action) {
+    // Define the khipu account in the rules.
+    if ($action->getElementName() == 'commerce_payment_enable_khipu') {
+      $action->settings['payment_method'] = array(
+        'method_id' => 'khipu',
+        'settings' => array(
+          'kaid' => $khipu_account->kaid,
+          'subject' => variable_get('site_name'),
+          'body' => variable_get('site_name'),
+          'button_image' => '100x25',
+        ),
+      );
+    }
+  }
+  $rule->save();
+
+  drupal_set_message(st('Account Khipu was been created'));
+
+}
+
+/**
+ * Will import the products examples.
+ */
+function picec_configure_install_demo() {
+  $operations = array();
+
+  $modules = array(
+    'migrate' => st('Migrate'),
+    'migrate_extras' => st('Migrate Extras'),
+    'commerce_migrate' => st('Commerce Migrate'),
+    'picec_demo' => st('Picec Demo'),
+  );
+  foreach ($modules as $module => $name) {
+    $operations[] = array(
+      '_picec_install_demo_modules_dependencies', array($module, $name),
+    );
+  }
+
+  $batch = array(
+    'title' => st('Installing demo store'),
+    'operations' => $operations,
+    'finished' => '_picec_install_demo_flush_cache',
+    'file' => drupal_get_path('profile', 'picec') . '/picec.operations.inc',
+  );
+
+  return $batch;
+}
+
+
+function picec_configure_import_content() {
+  $operations = array();
+
+  $migrations = migrate_migrations();
+  foreach ($migrations as $machine_name => $migration) {
+    $operations[] = array('_picec_install_demo_import', array($machine_name));
+  }
+
+  $batch = array(
+    'title' => st('Import Products'),
+    'operations' => $operations,
+    'file' => drupal_get_path('profile', 'picec') . '/picec.operations.inc',
+  );
+
+  return $batch;
+}
+
+
+/**
+ * Overridden the last step.
+ *
+ * @param $install_state
+ *   An array of information about the current installation state.
+ *
+ * @return
+ *   A message informing the user about errors if there was some.
+ */
+function picec_install_finished(&$install_state) {
+  // Migrate adds its messages under the wrong type, see #1659150.
+  drupal_get_messages('completed', TRUE);
+
+  $picec_name = 'PICEC';
+  drupal_set_title(st('@drupal installation complete', array('@drupal' => $picec_name)), PASS_THROUGH);
+  $messages = drupal_set_message();
+
+  // Remember the profile which was used.
+  variable_set('install_profile', drupal_get_profile());
+  variable_set('install_task', 'done');
+
+  // Flush all caches to ensure that any full bootstraps during the installer
+  // do not leave stale cached data, and that any content types or other items
+  // registered by the install profile are registered correctly.
+  drupal_flush_all_caches();
+
+  // Install profiles are always loaded last
+  db_update('system')
+    ->fields(array('weight' => 1000))
+    ->condition('type', 'module')
+    ->condition('name', drupal_get_profile())
+    ->execute();
+
+  // Cache a fully-built schema.
+  drupal_get_schema(NULL, TRUE);
+
+  // Run cron to populate update status tables (if available) so that users
+  // will be warned if they've installed an out of date Drupal version.
+  // Will also trigger indexing of profile-supplied content or feeds.
+  drupal_cron_run();
+
+  $output = '<p>' . st('Congratulations, you installed @drupal!', array('@drupal' => $picec_name)) . '</p>';
+
+  if (variable_get('picec_profile_demo_install', FALSE)) {
+    $output .= '<p>' . st('Remember you have installed the demo of the store.') . '</p>';
+  }
+  $output .= '<p>' . (isset($messages['error']) ? st('Review the messages above before visiting <a href="@url">your new site</a>.', array('@url' => url(''))) : st('<a href="@url">Visit your new site</a>.', array('@url' => url('')))) . '</p>';
+
+  // This variable is no longer needed.
+  variable_del('picec_profile_demo_install');
+
+  return $output;
+}
+
+
+/**
+ * Implements hook_install().
+ */
+function picec_install() {
+  $install_demo = variable_get('picec_profile_demo_install', FALSE);
+  if ($install_demo) {
+
+    $migration = Migration::getInstance('ProductXML');
+    $migration->processImport();
+  }
+
+  $default_theme = 'compra';
+  theme_enable(array($default_theme));
+  variable_set('theme_default', $default_theme);
+  theme_disable(array('bartik'));
+
+
+  // By default the currency will be CLP.
+  variable_set('commerce_default_currency', 'CLP');
+  // @TODO: Disable USD currency.
+
+  // Add text formats.
+  $filtered_html_format = array(
+    'format' => 'filtered_html',
+    'name' => 'Filtered HTML',
+    'weight' => 0,
+    'filters' => array(
+      // URL filter.
+      'filter_url' => array(
+        'weight' => 0,
+        'status' => 1,
+      ),
+      // HTML filter.
+      'filter_html' => array(
+        'weight' => 1,
+        'status' => 1,
+      ),
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 2,
+        'status' => 1,
+      ),
+      // HTML corrector filter.
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+      ),
+    ),
+  );
+  $filtered_html_format = (object) $filtered_html_format;
+  filter_format_save($filtered_html_format);
+
+  $full_html_format = array(
+    'format' => 'full_html',
+    'name' => 'Full HTML',
+    'weight' => 1,
+    'filters' => array(
+      // URL filter.
+      'filter_url' => array(
+        'weight' => 0,
+        'status' => 1,
+      ),
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 1,
+        'status' => 1,
+      ),
+      // HTML corrector filter.
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+      ),
+    ),
+  );
+  $full_html_format = (object) $full_html_format;
+  filter_format_save($full_html_format);
+
+  // Insert default pre-defined node types into the database.
+  $types = array(
+    array(
+      'type' => 'page',
+      'name' => st('Basic page'),
+      'base' => 'node_content',
+      'description' => st("Use <em>basic pages</em> for your static content, such as an 'About us' page."),
+      'custom' => 1,
+      'modified' => 1,
+      'locked' => 0,
+    ),
+  );
+
+  foreach ($types as $type) {
+    $type = node_type_set_defaults($type);
+    node_type_save($type);
+    node_add_body_field($type);
+  }
+
+  // "Basic page" configuration.
+  variable_set('node_options_page', array('status'));
+  variable_set('comment_page', COMMENT_NODE_HIDDEN);
+  variable_set('node_submitted_page', FALSE);
+  variable_set('pathauto_node_page_pattern', '[node:title]');
+
+  // "Product Display" configuration.
+  variable_set('comment_product_display', COMMENT_NODE_HIDDEN);
+  variable_set('node_submitted_product_display', FALSE);
+  variable_set('pathauto_node_product_display_pattern', 'product/[node:title]');
+
+  // Enable default permissions for system roles.
+  $filtered_html_permission = filter_permission_name($filtered_html_format);
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content', 'access comments', 'access checkout', 'view own commerce_order entities', 'view any commerce_product entity', $filtered_html_permission));
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content', 'access comments', 'access checkout', 'view own commerce_order entities', 'view any commerce_product entity', 'post comments', 'skip comment approval', $filtered_html_permission));
+
+  // Create a default role for site administrators, with all available permissions assigned.
+  $admin_role = new stdClass();
+  $admin_role->name = 'administrator';
+  $admin_role->weight = 2;
+  user_role_save($admin_role);
+  user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $admin_role->rid);
+
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')
+    ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
+    ->execute();
+
+
+
+  // Enable automatic title replacement for node and commerce product bundles.
+  foreach (array('node', 'commerce_product') as $entity_type) {
+    $title_settings = array(
+      'auto_attach' => array(
+        'title' => 'title',
+      ),
+      'hide_label' => array(
+        'entity' => 'entity',
+        'page' => 0,
+      ),
+    );
+    variable_set('title_' . $entity_type, $title_settings);
+  }
+
+  $admin_theme = 'seven';
+  $blocks = array(
+    array(
+      'module' => 'system',
+      'delta' => 'main',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'content',
+      'pages' => '',
+      'visibility' => 0,
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'system',
+      'delta' => 'help',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'help',
+      'pages' => '',
+      'visibility' => 0,
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'user',
+      'delta' => 'login',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 10,
+      'region' => 'content',
+      'pages' => '',
+      'visibility' => 0,
+      'cache' => -1,
+    ),
+    // Facet Categories.
+    array(
+      'module' => 'facetapi',
+      'delta' => 'pLVzab0nMbhSSwArINqSoiflSivVes2Q',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => -1,
+      'region' => 'sidebar_first',
+      'pages' => 'catalog',
+      'visibility' => 1,
+      'cache' => -1,
+    ),
+    // Facet Price.
+    array(
+      'module' => 'facetapi',
+      'delta' => 'TFVaQKSORCPdrULxfXDnLQZ40xH0Nper',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'sidebar_first',
+      'pages' => 'catalog',
+      'visibility' => 1,
+      'cache' => -1,
+    ),
+    // Views exposed
+    array(
+      'module' => 'views',
+      'delta' => '-exp-catalog_search_api-page',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'search',
+      'pages' => '',
+      'visibility' => 0,
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'commerce_cart',
+      'delta' => 'cart',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'cart',
+      'pages' => 'checkout*',
+      'visibility' => 0,
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'current_search',
+      'delta' => 'picec_search',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => -9,
+      'region' => 'content',
+      'pages' => '',
+      'visibility' => 0,
+      'cache' => -1,
+    ),
+
+  );
+  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'visibility', 'cache'));
+  foreach ($blocks as $block) {
+    $query->values($block);
+  }
+  $query->execute();
+
+
+  // Set frontpage.
+  variable_set('site_frontpage', 'catalog');
+
+  // Enable the admin theme.
+  db_update('system')
+    ->fields(array('status' => 1))
+    ->condition('type', 'theme')
+    ->condition('name', 'picec_seven')
+    ->execute();
+  variable_set('admin_theme', 'picec_seven');
+
+
+}

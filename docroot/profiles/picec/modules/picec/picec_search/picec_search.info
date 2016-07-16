@@ -1,0 +1,31 @@
+name = PICEC Search
+core = 7.x
+package = PICEC
+project = picec_search
+dependencies[] = ctools
+dependencies[] = current_search
+dependencies[] = entity
+dependencies[] = picec_product
+dependencies[] = search_api
+dependencies[] = search_api_db
+dependencies[] = search_api_facetapi
+dependencies[] = views
+features[ctools][] = current_search:current_search:1
+features[ctools][] = facetapi:facetapi_defaults:1
+features[ctools][] = views:views_default:3.0
+features[current_search][] = picec_serach
+features[facetapi][] = search_api@product_display:block:field_product:commerce_price:amount_decimal
+features[facetapi][] = search_api@product_display:block:field_product_categories
+features[features_api][] = api:2
+features[search_api_index][] = product_display
+features[search_api_server][] = catalog
+features[views_view][] = catalog_search_api
+features_exclude[dependencies][facetapi] = facetapi
+project path = profiles/picec/modules/picec
+
+; Information added by Drupal.org packaging script on 2016-04-24
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "picec"
+datestamp = "1461504541"
+

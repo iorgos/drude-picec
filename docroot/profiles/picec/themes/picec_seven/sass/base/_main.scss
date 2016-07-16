@@ -1,0 +1,65 @@
+
+.maintenance-page.in-maintenance{
+  
+  // background: url('../images/bg/bg-7.png') repeat;
+  background: $bg-color;
+
+  #branding{
+
+    // background: url('../images/bg/bg-7.png') repeat;
+    background: $bg-color;
+    margin-bottom: 15px;
+    h1{
+      color: black;
+      font-size: 1.5em;
+      text-align: center;
+    }
+
+  }
+  #page{
+    position: relative;
+    z-index: 1;
+    border: 1px solid #DBDADA;
+
+    #sidebar-first{
+      padding: 20px 10px;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      #logo{
+        display: block;
+        margin: auto;
+      }
+
+      &:before{
+        content: "";
+        background: $bg-sidebar-color;
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        width: 220px;
+
+      }
+
+      ol.task-list{
+        li{
+          color: white;
+        }
+        li.done{
+          background: none;
+          border-left: 3px solid $green;
+        }
+        li.active{
+          background: #212026;
+          border-left: 3px solid $green;
+        }
+      }
+    }
+
+    #content{
+      width: 510px;
+    }
+  }
+}

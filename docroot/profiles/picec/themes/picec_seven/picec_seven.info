@@ -1,0 +1,20 @@
+name = PICEC Seven
+description = This is a sub-theme of theme Seven.
+core = 7.x
+base theme = seven
+
+stylesheets[screen][] = css/picec_seven.style.css
+
+regions[content] = Content
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[sidebar_first] = First sidebar
+regions_hidden[] = sidebar_first
+
+; Information added by Drupal.org packaging script on 2016-04-24
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "picec"
+datestamp = "1461504541"
+

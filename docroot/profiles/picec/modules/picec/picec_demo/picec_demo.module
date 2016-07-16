@@ -1,0 +1,14 @@
+<?php
+/**
+ * @file main file almost empty
+ *
+ * Most of the intelligence of the module is within the file include/product.inc
+ * since this module is based on Migrate.
+ */
+if( ! defined("PICEC_DEFAULT_LANGUAGE")) {
+  define("PICEC_DEFAULT_LANGUAGE", "es");
+}
+
+if( ! defined("DRUPAL_DEFAULT_LANGUAGE")) {
+  define("DRUPAL_DEFAULT_LANGUAGE", "en");
+}

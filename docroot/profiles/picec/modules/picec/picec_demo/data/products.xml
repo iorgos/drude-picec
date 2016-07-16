@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product source="http://www.chileamano.com">
+    <name>Muñeca a telar</name>
+    <description>
+      Estos muñecos recuerdan a las muñequitas chilotas, pero tienen la particularidad de que tienen un cuerpo aparte de su vestimenta y pueden incluso confeccionarsele más ropa para intercambiar. Ideal como regalo para estimular el aprendizaje de los pequeños que están aprendiendo a vestirse solos. Disponible en versión mujer o hombre.
+    </description>
+    <sku>MUÑ_tel</sku>
+    <price>18000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img1.jpg</filename>
+      <alt>Muñeca</alt>
+    </img>
+    <categories>
+        <category_id>1</category_id>
+        <category_id>2</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Muñeca de Crin</name>
+    <description>
+      Quien haya vistro la serie animada Tickiticlip, recordará a la señorita aseñorada, preciosa muñequita en crin que en la canción encontraba un dulce amor.
+    </description>
+    <sku>SEÑ_ase</sku>
+    <price>14000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img2.jpg</filename>
+      <alt>Muñeca de Crin</alt>
+    </img>
+    <categories>
+        <category_id>2</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Canasta sin asas</name>
+    <description>
+      Canasta en dos colores de voqui, muy rústica, antiguamente usada para cosechar choros y almejas en la baja mar.
+    </description>
+    <sku>CAN_sin</sku>
+    <price>16000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img3.jpg</filename>
+      <alt>Canasta sin asas</alt>
+    </img>
+    <categories>
+        <category_id>5</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Telar decorativo mediano</name>
+    <description>
+      Los murales en telar son elementos decorativos que salen de lo comun sin ser excentricos. En este telar una bonita mezcla de colores y fibras.
+    </description>
+    <sku>TEL_dec_med</sku>
+    <price>18000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img9.jpg</filename>
+      <alt>Telar decorativo mediano</alt>
+    </img>
+    <categories>
+        <category_id>1</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Pareja Cuequera</name>
+    <description>
+    Que fantastica expresión y movimiento tienen estos dos bailarines de cueca brava fabricados siguiendo todos los pasos de la antigua técnica de la loza policromada.
+</description>
+    <sku>PAR_cue</sku>
+    <price>38000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img6.jpg</filename>
+      <alt>Pareja Cuequera</alt>
+    </img>
+    <categories>
+        <category_id>3</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Árbol de la vida mediano</name>
+    <description>
+      El árbol de la vida encierra profundos simbolismos que evocan fertilidad y abundancia, en su armoniosa y a la vez delicada forma.
+    </description>
+    <sku>ARB_med</sku>
+    <price>77000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img5.jpg</filename>
+      <alt>Árbol de la vida mediano</alt>
+    </img>
+    <categories>
+        <category_id>3</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Gallito tricolor</name>
+    <description>
+      Gallo tejido de color crudo, negro y rojo con bonito gesto de inclinación de su cabeza con cresta colorada que puede darle color a nuestra casa.
+    </description>
+    <sku>GALL_tri</sku>
+    <price>30000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img7.jpg</filename>
+      <alt>Gallito tricolor</alt>
+    </img>
+    <categories>
+        <category_id>1</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Jarro antropomorfo mediano</name>
+    <description>
+      Jarro antropomorfo inspirado en la cultura diaguita, con un bonito tono ahumado.
+    </description>
+    <sku>JAR_antr_med</sku>
+    <price>8500</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img8.jpg</filename>
+      <alt>Jarro antropomorfo mediano</alt>
+    </img>
+    <categories>
+        <category_id>3</category_id>
+    </categories>
+  </product>
+  <product source="http://www.chileamano.com">
+    <name>Colgante de Cultrún</name>
+    <description>
+      Colgante con esfera que representa el cultrún y la cuatri partición sagrada del mundo de la cosmovisión mapuche. Incluye cadena también en plata 950 de 50 cms.
+    </description>
+    <sku>COL_cul</sku>
+    <price>36000</price>
+    <currency>CLP</currency>
+    <img>
+      <filename>img4.jpg</filename>
+      <alt>Colgante de Cultrún</alt>
+    </img>
+    <categories>
+        <category_id>4</category_id>
+    </categories>
+  </product>
+</products>

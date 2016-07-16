@@ -1,0 +1,17 @@
+name = "PICEC demo content"
+description = "Content example for PICEC."
+package = "PICEC"
+core = 7.x
+
+dependencies[] = commerce_migrate
+dependencies[] = picec_product
+
+files[] = picec_demo.module
+files[] = include/product.inc
+files[] = include/category.inc
+; Information added by Drupal.org packaging script on 2016-04-24
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "picec"
+datestamp = "1461504541"
+

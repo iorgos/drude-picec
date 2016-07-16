@@ -1,0 +1,184 @@
+@import "compass/css3/font-face";
+
+@include font-face("CaviarDreams", font-files("CaviarDreams/CaviarDreams.ttf"));
+@include font-face("CaviarDreams_Italic", font-files("CaviarDreams/CaviarDreams_Italic.ttf"));
+@include font-face("CaviarDreams_Bold", font-files("CaviarDreams/Caviar_Dreams_Bold.ttf"));
+
+
+@include font-face("Raleway", font-files("Raleway/Raleway-Regular.otf"));
+@include font-face("Raleway Medium", font-files("Raleway/Raleway-Medium.otf"));
+@include font-face("Raleway SemiBold", font-files("Raleway/Raleway-SemiBold.otf"));
+@include font-face("Raleway Bold", font-files("Raleway/Raleway-Bold.otf"));
+
+*{
+  font-family: "Raleway";
+  color: #222;
+  line-height: 160%;
+}
+
+body{
+  font-size: 1.2em;
+}
+
+h1{
+  margin-top: 0;
+}
+
+aside h2.block__title{
+  margin-top: 0;
+}
+
+h1, h2, h3{
+  font-family: "Raleway Bold";
+}
+
+a{
+  color: #428bca;
+  font-weight: 500;
+}
+
+a:hover{
+  color: darken(#428bca, 40%);
+}
+
+h1.site-name {
+  margin: 0;
+  a{
+    font-family: "CaviarDreams_Bold";
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+  }
+}
+
+.l-content{
+  background-color: #fff;
+  ul.breadcrumb{
+    margin: 0;
+    padding: 0;
+    li{
+      display: inline-block;
+      margin-right: 0.5em;
+      a{
+        font-family: Verdana;
+        text-decoration: none;
+        font-size: 0.7em;
+      }
+      a:hover{
+        transition: 0.3s;
+        text-decoration: underline;
+        color: blue;
+      }
+    }
+  }
+}
+
+table{
+  width: 100%;
+  border: 1px solid #ddd;
+  tr{
+    border-bottom: 1px solid #ddd;
+  }
+  tr.odd{
+    background-color: #fff;
+  }
+  tr.even{
+    background-color: #eee;
+  }
+  tr.region-title{
+    background-color: #B3BCFF;
+    td{
+      font-size: 1.2em;
+      text-align: center;
+      font-weight: bold;
+      font-family: "Railway Bold";
+    }
+  }
+  td, th{
+    padding: 0.5em 0.3em;
+  }
+  td .description{
+    font-size: 0.7em;
+  }
+}
+
+input[type=text],
+textarea,
+select,
+select > option
+{
+  padding: 0.5em 0.2em;
+  @include border-radius(4px, 4px);
+  border: 1px solid #ccc;
+}
+
+
+.form-wrapper{
+  margin-bottom: 2.5em;
+}
+
+input[type=text]:focus{
+  box-shadow: 0px 0px 18px 0px rgba(116, 180, 141, 1);
+}
+
+fieldset{
+  margin-top: 1em;
+  padding: 1em;
+}
+
+fieldset > legend,
+fieldset > legend span
+{
+  font-family: "Raleway Bold";
+  font-size: 1.1em;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"]{
+  background-color: #eee;
+  border: 1px solid #ccc;
+  @include border-radius(4px, 4px);
+  padding: 0.5em 0.4em;
+  margin: 0.3em;
+}
+
+#main-content-container{
+  dl{
+    dd{
+      font-size: 0.7em;
+    }
+    dt{
+      margin-top: 1em;
+      margin-bottom: 0.2em;
+      a{
+        font-size: 1.2em;
+        text-decoration: none;
+      }
+      a:hover{
+        color: darken(#428bca, 40%);
+
+      }
+    }
+  }
+}
+
+.l-main{
+  float: left;
+  /*background-color: orange;*/
+  h1{
+    margin: 0;
+  }
+}
+
+aside.l-region--sidebar-first{
+}
+
+.block--facetapi{
+  font-size: 0.8em;
+}
+
+aside .block{
+  margin-bottom: 2em;
+}

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the PICEC Product feature.
+ */
+
+include_once 'picec_product.features.inc';

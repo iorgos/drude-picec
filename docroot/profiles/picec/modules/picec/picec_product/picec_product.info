@@ -1,0 +1,44 @@
+name = PICEC Product
+core = 7.x
+package = PICEC
+project = picec_product
+dependencies[] = commerce_cart
+dependencies[] = commerce_features
+dependencies[] = commerce_product_ui
+dependencies[] = entity
+dependencies[] = image
+dependencies[] = inline_entity_form
+dependencies[] = strongarm
+dependencies[] = taxonomy
+dependencies[] = text
+features[commerce_product_type][] = product
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[field_base][] = body
+features[field_base][] = commerce_price
+features[field_base][] = field_product
+features[field_base][] = field_product_categories
+features[field_base][] = field_product_images
+features[field_base][] = title_field
+features[field_instance][] = commerce_product-product-commerce_price
+features[field_instance][] = commerce_product-product-field_product_images
+features[field_instance][] = node-product_display-body
+features[field_instance][] = node-product_display-field_product
+features[field_instance][] = node-product_display-field_product_categories
+features[field_instance][] = node-product_display-title_field
+features[node][] = product_display
+features[taxonomy][] = product_category
+features[variable][] = comment_product_display
+features[variable][] = field_bundle_settings_node__product_display
+features[variable][] = node_submitted_product_display
+features_exclude[dependencies][commerce_price] = commerce_price
+features_exclude[dependencies][commerce_product_reference] = commerce_product_reference
+features_exclude[dependencies][ctools] = ctools
+features_exclude[dependencies][features] = features
+
+; Information added by Drupal.org packaging script on 2016-04-24
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "picec"
+datestamp = "1461504541"
+

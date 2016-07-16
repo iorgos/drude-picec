@@ -1,0 +1,59 @@
+# Spanish translation of PICEC (7.x-1.0-dev)
+# Copyright (c) 2011 by the Spanish translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PICEC (7.x-1.0-dev)\n"
+"POT-Creation-Date: 2016-04-09 14:58+0000\n"
+"PO-Revision-Date: 2016-04-09 14:58+0000\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Welcome to the installation of the Chilean electronic commerce."
+msgstr "Bienvenido al perfil de instalación chileno de comercio electrónico."
+msgid "Welcome"
+msgstr "Bienvenido"
+msgid "PICEC Installation"
+msgstr "Instalación de PICEC"
+msgid "Install PICEC"
+msgstr "Instalar PICEC"
+msgid "This profile is designed for ecommerce Chilean locality. Please check the following before installing:"
+msgstr "Este perfil está diseñado para el comercio electrónico en Chile. Por favor, revise lo siguiente antes de instalar:"
+msgid 'This profile is developed by the <a href="!url" target="_blank">community of Chile</a>.'
+msgstr "Este perfil es desarrollado por la <a href=\"!url\" target=\"_blank\">comunidad chilena</a>."
+msgid 'For any problem or bug you find please report it on the <a href="!url" target="_blank">project page</a> at drupal.org'
+msgstr "En el caso de problemas o errores por favor repórtelo a la <a href="!url" target="_blank">página del proyecto</a> en drupal.org."
+msgid "Proceed with the installation"
+msgstr "Continuar con la instalación"
+msgid "Configure store"
+msgstr "Configurar tienda"
+msgid "Setting Khipu"
+msgstr "Integración con Khipu"
+msgid "Demo Content"
+msgstr "Contenido demo"
+msgid 'Define a khipu account for use in the payment system. You need to have an account in <a href="!url" target="_blank">khipu</a>.'
+msgstr "Definir una cuenta Khipu para su uso en el sistema de pago. Es necesario tener una cuenta en <a href="!url" target="_blank">khipu</a>."
+msgid "I have an account and i want to integrate it with my commerce."
+msgstr "Ya tengo una cuenta y quiero integrarla con el sitio."
+msgid "I want to install the products examples."
+msgstr "Quiero instalar los productos de ejemplo."
+msgid "Installing demo store"
+msgstr "Instalando tienda de ejemplo"
+msgid "Install additional modules"
+msgstr "Instalando módulos adicionales"
+msgid "Import Products"
+msgstr "Importación de productos"
+msgid "Importing categories and products"
+msgstr "Importando categorías y productos"
+msgid "Remember you have installed the demo of the store."
+msgstr "Recuerde que usted ha instalado la tienda de ejemplo."
+
+
+
+
+
+
+

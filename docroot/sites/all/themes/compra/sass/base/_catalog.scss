@@ -1,0 +1,149 @@
+.view-catalog-search-api{
+  ul{
+    padding: 0;
+    list-style-type: none;
+    float: left;
+    width: 100%;
+    li{
+      margin: 0;
+    }
+  }
+  .view-filters{
+
+  }
+  .view-content{
+    .views-row{
+      padding: 0;
+      float: left;
+      clear: none;
+      width: 100%;
+      @include breakpoint($tablet){
+        width: 47%;
+        margin-right: 1em;
+        float: left;
+      }
+      @include breakpoint($desktop){
+        width: 30%;
+      }
+      margin: 0;
+      margin-bottom: 1.8em;
+      border: 1px solid #999;
+      background-color: #ccc;
+      article{
+        margin: 0.6em;
+        border: 1px solid #999;
+        background-color: #fff;
+        h2{
+          text-align: center;
+          background: #333;
+          color: #fff;
+          margin: 0;
+          vertical-align: middle;
+          padding: 0.5em;
+          margin-bottom: 0.5em;
+          font-size: 1.1em;
+          a{
+            vertical-align: middle;
+            display: block;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            color: #fff;
+          }
+          a:hover{
+            text-decoration: underline;
+          }
+        }
+        .node__content{
+          float: left;
+          width: 100%;
+          background-color: #fff;
+          margin-bottom: 0.6em;
+          .commerce-product-field{
+            float: left;
+          }
+          .field--name-commerce-price{
+            font-size: 1.5em;
+            margin-left: 1em;
+          }
+        }
+      }
+    }
+  }
+  .views-exposed-form .views-exposed-widget .form-submit {
+    margin-top: 1.1em;
+  }
+}
+
+.block--facetapi{
+  h2.block__title{
+    margin-bottom: 0;
+    font-size: 0.9em;
+  }
+  .block__content{
+    a.facetapi-active{
+      font-weight: bold;
+      width: 2em;
+      height: 2em;
+      background-color: #333;
+      color: #fff;
+      float: left;
+      margin-right: 0.5em;
+      @include border-radius(0.5em, 0.5em);
+    }
+    a.facetapi-active:hover{
+      color: #e6e6e6;
+    }
+    ul{
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      width: 100%;
+      float: left;
+      clear: both;
+      li{
+        float: left;
+        clear: both;
+        width: 100%;
+        border: 1px solid #e6e6e6;
+        @include border-radius(3px);
+        margin-bottom: 1px;
+        width: 100%;
+      }
+      li:hover{
+        @include transition-property(border);
+        @include transition-duration(0.5s);
+        border: 1px solid #ccc;
+        @include transition-property(box-shadow);
+        @include transition-duration(0.5s);
+        @include box-shadow(0px 0px 3px 2px rgba(200, 200, 200, 0.5));
+      }
+      a{
+        padding: 0.2em 0.4em;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: #0e2132;
+        font-size: 0.8em;
+        text-align: center;
+        width: 100%;
+      }
+      a:hover{
+        @include transition-property(color);
+        @include transition-duration(0.3s);
+        color: #03069B;
+
+      }
+    }
+  }
+  a.facetapi-limit-link{
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-size: 0.7em;
+    text-decoration: none;
+  }
+  a.facetapi-limit-link:hover{
+    text-decoration: underline;
+  }
+}

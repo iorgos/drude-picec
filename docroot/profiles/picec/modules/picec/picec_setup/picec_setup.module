@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the PICEC Setup feature.
+ */
+
+include_once 'picec_setup.features.inc';

@@ -1,0 +1,121 @@
+/*
+@include sgs-change('debug', true);
+*/
+
+@include add-grid($grids-default);
+@include add-grid($grids-desktop at $desktop);
+
+@include add-gutter(0);
+
+
+body{
+    @include background-grid($color: #ffee00);
+}
+
+
+.l-page{
+  @include grid-span(12, 1);
+  @include breakpoint ($desktop){
+      @include grid-span(24, 1);
+  }
+}
+
+.l-header{
+  width: 100%;
+  float: left;
+  clear: both;
+  padding: 0 1em;
+  .l-branding{
+    text-align: center;
+    margin: 0;
+    padding: 0.2em 0 0 0.2em;
+    img{
+      @include breakpoint ($desktop){
+        width: auto;
+        height: 4em;
+      }
+    }
+    a.site-logo{
+      display: block;
+    }
+  }
+  .l-region--navigation{
+    float: left;
+    clear: both;
+    width: 100%;
+  }
+  .l-region--search{
+    @include grid-span(6, 1);
+    @include breakpoint ($desktop){
+        @include grid-span(12, 1);
+    }
+  }
+  .l-region--cart{
+    @include grid-span(6, 7);
+    @include breakpoint ($desktop){
+        @include grid-span(12, 13);
+    }
+  }
+
+}
+
+.l-region--sidebar-first{
+  @include background-grid($color: #ff6600);
+  @include grid-span(12, 1);
+  @include breakpoint ($desktop){
+    padding: 1em;
+    @include grid-span(4, 1);
+  }
+}
+
+.l-region--sidebar-second{
+  @include background-grid($color: green);
+  @include grid-span(12, 1);
+  @include breakpoint ($desktop){
+    padding: 1em;
+    @include grid-span(5, 20);
+  }
+}
+
+.l-content{
+  margin: 0;
+  @include background-grid($color: orange);
+  @include grid-span(12, 1);
+  @include breakpoint ($desktop){
+    padding: 1em;
+    padding-top: 0;
+    @include grid-span(15, 5);
+  }
+  #main-content-container{
+    width: 100%;
+    float: left;
+  }
+}
+
+.l-main{
+  @include grid-span(12, 1);
+  @include breakpoint ($desktop){
+    @include grid-span(24, 1);
+  }
+}
+
+
+.no-sidebar-first .l-content{
+  @include breakpoint ($desktop){
+    padding: 0 1em;
+    @include grid-span(19, 1);
+  }
+}
+.no-sidebar-second .l-content{
+  @include breakpoint ($desktop){
+    padding: 0 1em;
+    @include grid-span(20, 5);
+  }
+}
+
+.no-sidebars .l-content{
+  @include breakpoint ($desktop){
+    padding: 0 1em;
+    @include grid-span(24, 1);
+  }
+}

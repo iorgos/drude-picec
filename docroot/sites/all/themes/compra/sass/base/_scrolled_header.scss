@@ -1,0 +1,42 @@
+.l-header.scrolled{
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  @include box-shadow(0px 5px 5px 0px rgba(50, 50, 50, 0.75));
+  background-color: #ffffff;
+  .l-region--navigation{
+    ul{
+      border: none;
+      margin-top: 0.5em;
+    }
+  }
+  h1.site-name{
+    display: none;
+  }
+  .l-branding{
+    float: left;
+    clear: none;
+    margin-right: 1em;
+    img{
+      height: 2em;
+    }
+  }
+  ul{
+    width: 80%;
+    clear: none;
+  }
+}
+
+.adminimal-menu .l-header.scrolled{
+  @include breakpoint($tablet){
+    top: 28px;
+  }
+}
+
+
+.l-header.scrolled #block-views-exp-catalog-search-api-page{
+  font-size: 0.8em;
+  padding: 0.3em 0.1em;
+}
