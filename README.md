@@ -1,7 +1,6 @@
-# drude-picec
-PICEC with Drude
+# PICEC with Drude
 
-Requires Drude Shell
+Requires [Drude Shell](https://github.com/blinkreaction/drude)
 
 ##Usage:
 ```
