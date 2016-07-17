@@ -1,6 +1,3 @@
-# Docker and Docker Compose based environment for Drupal.
-# See https://github.com/blinkreaction/drude for more information and documentation.
-
 # Web node
 web:
   extends:
